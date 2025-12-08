@@ -1,0 +1,144 @@
+/* styles.css - custom stylesheet from scratch */
+
+/* 1) Body background color and optionally a background image */
+body {
+  margin: 0;
+  font-family: 'Helvetica Neue', Arial, sans-serif; /* font family requirement */
+  color: #222;            /* font color requirement */
+  background-color: #eeeced; /* custom background color */
+  /* Optional background image (uncomment and replace URL) */
+  /* background-image: url('images/bg-texture.jpg'); */
+  background-size: cover;
+  background-attachment: fixed;
+  line-height: 1.5;
+  padding: 20px;
+}
+
+/* 2) Top navigation */
+.topnav {
+  display: flex;
+  gap: 16px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 8px 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+.topnav a {
+  text-decoration: none;
+  color: #0b5cff; /* link color */
+  font-weight: 600;
+}
+
+/* 3) Header */
+.site-header {
+  background: white;
+  padding: 24px;
+  border-radius: 8px;
+  margin-bottom: 18px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+.site-header h1 {
+  margin: 0 0 8px 0;
+  font-family: 'Georgia', serif; /* different font family for heading */
+  color: #1a1a1a;
+}
+.subtitle {
+  margin: 0;
+  color: #666;
+}
+
+/* 4) Gallery image styling */
+.gallery {
+  margin-bottom: 18px;
+}
+.featured-photo {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 6px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+.caption {
+  font-size: 0.95rem;
+  color: #444;
+}
+
+/* 5) Sessions (lists) styling */
+.sessions {
+  background: white;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 18px;
+}
+.sessions ol {
+  padding-left: 1.2em;
+}
+.sessions ul {
+  padding-left: 1.1em;
+  margin-top: 6px;
+}
+
+/* 6) Video section */
+.video-section {
+  margin: 16px 0;
+}
+.video-wrap {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* 7) Tableau wrap */
+.tableau-wrap {
+  margin: 12px 0;
+  background: #fff;
+  padding: 10px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+/* 8) Contact & footer */
+.contact-section {
+  background: white;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 18px;
+}
+.site-footer {
+  text-align: center;
+  padding: 12px;
+  color: #666;
+}
+
+/* Extra utility styles (cards you can reuse) */
+.card {
+  background: white;
+  padding: 12px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+.featured-photo {
+  max-width: 40%;   /* smaller */
+  height: auto;
+  display: block;
+  margin: 0 auto;   /* keeps it centered */
+  border-radius: 6px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+.small-photo {
+    max-width: 350px;
+}
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns of equal width */
+    gap: 10px; /* spacing between photos */
+    justify-content: center; /* center the grid horizontally */
+    margin: 20px auto; /* optional vertical spacing */
+}
+
+.photo-grid img {
+    width: 100%;
+    height: 300px; /* fixed height for consistency */
+    object-fit: cover; /* crops images nicely */
+    border-radius: 8px; /* optional rounded corners */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2); /* optional shadow */
+}
