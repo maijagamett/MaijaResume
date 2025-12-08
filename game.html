@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Red Bull Wordle</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f1e6; /* light beige */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+        margin: 0;
+    }
+
+    h1 {
+        color: #d90404; /* Red Bull style can be red too */
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .wordle-container {
+        display: grid;
+        grid-template-rows: repeat(6, 50px);
+        grid-gap: 5px;
+    }
+
+    .row {
+        display: grid;
+        grid-template-columns: repeat(5, 50px);
+        grid-gap: 5px;
+    }
+
+    .cell {
+        width: 50px;
+        height: 50px;
+        border: 2px solid #999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        text-transform: uppercase;
+        font-weight: bold;
+        user-select: none;
+    }
+
+    .cell.correct {
+        background-color: #28a745;
+        color: white;
+        border-color: #28a745;
+    }
+
+    .cell.present {
+        background-color: #ffc107;
+        color: white;
+        border-color: #ffc107;
+    }
+
+    .cell.absent {
+        background-color: #d3d3d3;
+        color: white;
+        border-color: #d3d3d3;
+    }
+
+    #message {
+        margin-top: 20px;
+        font-size: 20px;
+        font-weight: bold;
+        color: #d90404;
+        text-align: center;
+    }
+
+    button {
+        margin-top: 15px;
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #d90404;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #a60303;
+    }
+</style>
+</head>
+<body>
+
+<h1>Red Bull Wordle</h1>
+<div class="wordle-container" id="wordle"></div>
+<div id="message"></div>
+<button id="restartBtn">Restart Game</button>
+
+<script>
+    const WORD = "WINGS";
+    const MAX_GUESSES = 6;
+    let currentGuess = "";
+    let currentRow = 0;
+    let gameOver = false;
+
+    const wordleContainer = document.getElementById('wordle');
+    const messageEl = document.getElementById('message');
+    const restartBtn = document.getElementById('restartBtn');
+
+    // Create grid
+    for(let i=0; i<MAX_GUESSES; i++) {
+        const row = document.createElement('div');
+        row.classList.add('row');
+        for(let j=0; j<WORD.length; j++) {
+            const cell = document.createElement('div');
+            cell.classList.add('cell');
+            row.appendChild(cell);
+        }
+        wordleContainer.appendChild(row);
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if(gameOver) return;
+
+        if(e.key === "Backspace") {
+            currentGuess = currentGuess.slice(0, -1);
+            updateRow();
+        } else if(e.key === "Enter") {
+            if(currentGuess.length === WORD.length) {
+                submitGuess();
+            }
+        } else if(/^[a-zA-Z]$/.test(e.key)) {
+            if(currentGuess.length < WORD.length) {
+                currentGuess += e.key.toUpperCase();
+                updateRow();
+            }
+        }
+    });
+
+    function updateRow() {
+        const row = wordleContainer.children[currentRow];
+        for(let i=0; i<WORD.length; i++) {
+            const cell = row.children[i];
+            cell.textContent = currentGuess[i] || "";
+            cell.classList.remove('correct', 'present', 'absent');
+        }
+    }
+
+    function submitGuess() {
+        const row = wordleContainer.children[currentRow];
+        let correctCount = 0;
+        for(let i=0; i<WORD.length; i++) {
+            const cell = row.children[i];
+            const letter = currentGuess[i];
+            if(letter === WORD[i]) {
+                cell.classList.add('correct');
+                correctCount++;
+            } else if(WORD.includes(letter)) {
+                cell.classList.add('present');
+            } else {
+                cell.classList.add('absent');
+            }
+        }
+
+        if(correctCount === WORD.length) {
+            messageEl.textContent = "Red Bull gives you wings! 🥤";
+            gameOver = true;
+        } else {
+            currentRow++;
+            currentGuess = "";
+            if(currentRow === MAX_GUESSES) {
+                messageEl.textContent = `Game Over! The word was ${WORD}.`;
+                gameOver = true;
+            }
+        }
+    }
+
+    restartBtn.addEventListener('click', () => {
+        currentGuess = "";
+        currentRow = 0;
+        gameOver = false;
+        messageEl.textContent = "";
+        wordleContainer.innerHTML = "";
+        for(let i=0; i<MAX_GUESSES; i++) {
+            const row = document.createElement('div');
+            row.classList.add('row');
+            for(let j=0; j<WORD.length; j++) {
+                const cell = document.createElement('div');
+                cell.classList.add('cell');
+                row.appendChild(cell);
+            }
+            wordleContainer.appendChild(row);
+        }
+    });
+</script>
+
+</body>
+</html>
